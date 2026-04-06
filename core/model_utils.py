@@ -151,9 +151,43 @@ def train_models(X_train, y_train, X_test, y_test):
 def predict_with_recommendation(input_data, model, scaler, feature_columns):
     """Make prediction with business recommendations."""
     input_df = pd.DataFrame([input_data])
+    
+    # Synthesize missing engineered/raw features based on high-level UI inputs
+    if 'CLV' in input_df.columns and 'Purchase_Frequency' in input_df.columns:
+        input_df['Avg_Spending_Per_Purchase'] = input_df['CLV'] / (input_df['Purchase_Frequency'] + 1)
+        
+    if 'Recency' in input_df.columns:
+        input_df['Recency_Risk'] = input_df['Recency'] / 100.0
+        
+    if 'Income' in input_df.columns and 'Is_Partnered' in input_df.columns:
+        input_df['Total_Dependents'] = 1  # Assumption if missing
+        input_df['Income_Per_Member'] = input_df['Income'] / (1 + input_df['Is_Partnered'] + 1)
+        
+    input_df['Channel_Diversity'] = 3
+    input_df['Product_Diversity'] = 4
+    
+    # Distribute CLV into spending columns
+    if 'CLV' in input_df.columns:
+        for col in ['MntWines', 'MntFruits', 'MntMeatProducts', 'MntFishProducts', 'MntSweetProducts', 'MntGoldProds']:
+            input_df[col] = input_df['CLV'] / 6.0
+            
+    # Distribute Purchase Frequency into purchase columns
+    if 'Purchase_Frequency' in input_df.columns:
+        for col in ['NumDealsPurchases', 'NumWebPurchases', 'NumCatalogPurchases', 'NumStorePurchases']:
+            input_df[col] = input_df['Purchase_Frequency'] / 4.0
+            
+    if 'Campaign_Acceptance_Rate' in input_df.columns:
+        for col in ['AcceptedCmp1', 'AcceptedCmp2', 'AcceptedCmp3', 'AcceptedCmp4', 'AcceptedCmp5']:
+            input_df[col] = input_df['Campaign_Acceptance_Rate']
+            
+    input_df['NumWebVisitsMonth'] = 6
+    input_df['Kidhome'] = 0
+    input_df['Teenhome'] = 1
+
     for col in feature_columns:
         if col not in input_df.columns:
             input_df[col] = 0
+            
     input_df = input_df[feature_columns]
     input_scaled = scaler.transform(input_df)
 
