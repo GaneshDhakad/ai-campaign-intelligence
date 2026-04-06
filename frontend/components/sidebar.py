@@ -28,7 +28,7 @@ def render_sidebar():
 
         try:
             import httpx
-            r = httpx.get("http://localhost:8000/health", timeout=2)
+            r = httpx.get("https://ai-campaign-intelligence.onrender.com/health", timeout=2)
             if r.status_code == 200:
                 data = r.json()
                 ml_icon = "🟢" if data.get('ml_model_loaded') else "🔴"

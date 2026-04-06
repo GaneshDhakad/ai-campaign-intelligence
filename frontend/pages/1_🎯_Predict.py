@@ -18,7 +18,7 @@ from components.sidebar import render_sidebar
 inject_theme()
 render_sidebar()
 
-API = "http://localhost:8000"
+API = "https://ai-campaign-intelligence.onrender.com"
 
 st.markdown("## 🎯 Customer Response Prediction")
 st.caption("Enter customer details to predict campaign response with AI explainability")

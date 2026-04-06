@@ -14,6 +14,9 @@ import streamlit as st
 import httpx
 from datetime import datetime
 
+# ✅ LIVE BACKEND URL (UPDATED)
+API_URL = "https://ai-campaign-intelligence.onrender.com"
+
 st.set_page_config(
     page_title="Campaign IQ — AI Intelligence Engine",
     page_icon="🎯",
@@ -36,7 +39,7 @@ st.markdown(hero_banner(
 
 # ── KPI Summary ──
 try:
-    r = httpx.get("http://localhost:8000/analytics/summary", timeout=3)
+    r = httpx.get(f"{API_URL}/analytics/summary", timeout=10)
     if r.status_code == 200:
         data = r.json()
         c1, c2, c3, c4, c5 = st.columns(5)
@@ -56,10 +59,9 @@ try:
             st.markdown(kpi_card("Avg Sentiment", f"{data.get('avg_sentiment', 0):+.2f}",
                                  icon="😊", color="amber"), unsafe_allow_html=True)
     else:
-        st.info("📡 Connect to backend for live KPIs")
+        st.warning("⚠️ Backend connected but returned an error")
 except Exception:
-    st.info("📡 Start the backend server to see live dashboard data")
-    st.code("uvicorn backend.main:app --reload --port 8000", language="bash")
+    st.error("🚫 Cannot connect to backend (Render may be sleeping)")
 
 st.markdown("---")
 
@@ -70,33 +72,27 @@ c1, c2, c3 = st.columns(3)
 with c1:
     st.markdown("""
     <div class="glass-card" style="text-align:center; padding: 2rem;">
-        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎯</div>
-        <div style="font-weight: 600; font-size: 1.1rem; color: var(--text-primary);">Predict Response</div>
-        <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.3rem;">
-            Single customer prediction with SHAP explainability
-        </div>
+        <div style="font-size: 2.5rem;">🎯</div>
+        <div style="font-weight: 600;">Predict Response</div>
+        <div style="font-size: 0.85rem;">Single customer prediction</div>
     </div>
     """, unsafe_allow_html=True)
 
 with c2:
     st.markdown("""
     <div class="glass-card" style="text-align:center; padding: 2rem;">
-        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💬</div>
-        <div style="font-weight: 600; font-size: 1.1rem; color: var(--text-primary);">Analyze Sentiment</div>
-        <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.3rem;">
-            VADER-powered sentiment with keyword extraction
-        </div>
+        <div style="font-size: 2.5rem;">💬</div>
+        <div style="font-weight: 600;">Analyze Sentiment</div>
+        <div style="font-size: 0.85rem;">VADER sentiment engine</div>
     </div>
     """, unsafe_allow_html=True)
 
 with c3:
     st.markdown("""
     <div class="glass-card" style="text-align:center; padding: 2rem;">
-        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🧪</div>
-        <div style="font-weight: 600; font-size: 1.1rem; color: var(--text-primary);">Campaign Simulator</div>
-        <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.3rem;">
-            What-if analysis with ROI prediction engine
-        </div>
+        <div style="font-size: 2.5rem;">🧪</div>
+        <div style="font-weight: 600;">Campaign Simulator</div>
+        <div style="font-size: 0.85rem;">ROI what-if analysis</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -105,7 +101,7 @@ st.markdown("---")
 st.markdown("### 📋 Recent Predictions")
 
 try:
-    r = httpx.get("http://localhost:8000/analytics/history?limit=5", timeout=3)
+    r = httpx.get(f"{API_URL}/analytics/history?limit=5", timeout=10)
     if r.status_code == 200:
         history = r.json()
         if history:
@@ -115,14 +111,14 @@ try:
             available = [c for c in display_cols if c in df.columns]
             st.dataframe(df[available], use_container_width=True, hide_index=True)
         else:
-            st.caption("No predictions yet. Use the sidebar to navigate to the Predict page!")
+            st.caption("No predictions yet.")
 except Exception:
-    st.caption("📡 Backend offline — history unavailable")
+    st.caption("Backend sleeping or unreachable")
 
 # ── Footer ──
 st.markdown(f"""
 <div class="engine-footer">
-    🎯 Campaign Intelligence Engine v2.0 • Built with XGBoost, VADER, SHAP, FastAPI & Streamlit
-    <br/>© {datetime.now().year} AI Campaign IQ
+    🎯 Campaign Intelligence Engine v2.0 • FastAPI + Streamlit
+    <br/>© {datetime.now().year}
 </div>
 """, unsafe_allow_html=True)

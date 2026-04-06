@@ -17,7 +17,7 @@ from components.sidebar import render_sidebar
 inject_theme()
 render_sidebar()
 
-API = "http://localhost:8000"
+API = "https://ai-campaign-intelligence.onrender.com"
 
 st.markdown("## 💬 Sentiment Analysis Engine")
 st.caption("VADER + TF-IDF hybrid analysis with intensity scoring and keyword extraction")
