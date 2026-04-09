@@ -10,6 +10,7 @@ A premium, production-grade AI system that predicts customer campaign response a
 
 ```bash
 # 1. Install dependencies
+Use most stable version of python python 3.11.10 
 python -m venv venv
 venv\Scripts\activate        # Windows
 pip install -r requirements.txt
