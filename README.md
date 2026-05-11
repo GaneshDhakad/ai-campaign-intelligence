@@ -1,4 +1,4 @@
-# 🎯 AI Campaign Intelligence Engine
+#  AI Campaign Intelligence Engine
 
 A premium, production-grade AI system that predicts customer campaign response and analyzes sentiment to generate actionable business recommendations.
 
@@ -6,7 +6,7 @@ A premium, production-grade AI system that predicts customer campaign response a
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ```bash
 # 1. Install dependencies
@@ -31,7 +31,7 @@ streamlit run app.py
 
 ---
 
-## 📁 Architecture
+## Architecture
 
 ```
 ├── backend/                    # FastAPI REST API
@@ -43,12 +43,12 @@ streamlit run app.py
 ├── frontend/                   # Streamlit Premium Dashboard
 │   ├── app.py                  # Main dashboard (hero + KPIs)
 │   ├── pages/                  # 6 feature pages
-│   │   ├── 🎯 Predict          # Single prediction + SHAP
-│   │   ├── 📦 Batch Predict    # CSV upload bulk scoring
-│   │   ├── 💬 Sentiment        # VADER analysis + keywords
-│   │   ├── 📊 Analytics        # Historical trends
-│   │   ├── 🧪 Simulator        # Campaign ROI what-if
-│   │   └── 👥 Segments         # KMeans customer clusters
+│   │   ├──  Predict          # Single prediction + SHAP
+│   │   ├──  Batch Predict    # CSV upload bulk scoring
+│   │   ├──  Sentiment        # VADER analysis + keywords
+│   │   ├──  Analytics        # Historical trends
+│   │   ├──  Simulator        # Campaign ROI what-if
+│   │   └──  Segments         # KMeans customer clusters
 │   └── components/             # Theme, KPI cards, charts, sidebar
 │
 ├── core/                       # Shared ML/NLP modules
@@ -78,17 +78,17 @@ streamlit run app.py
 
 ---
 
-## 📊 Model Performance
+## Model Performance
 
 | Model | Accuracy | Precision | Recall | ROC-AUC |
 |-------|----------|-----------|--------|---------|
 | Logistic Regression | 0.88 | 0.85 | 0.87 | 0.93 |
 | Random Forest | 0.92 | 0.90 | 0.91 | 0.96 |
-| **XGBoost** ⭐ | **0.94** | **0.92** | **0.93** | **0.98** |
+| **XGBoost**  | **0.94** | **0.92** | **0.93** | **0.98** |
 
 ---
 
-## 🎨 Features
+##  Features
 
 - **Dark Glassmorphism UI** — Premium SaaS-grade design
 - **SHAP Explainability** — Understand why predictions are made
@@ -101,4 +101,4 @@ streamlit run app.py
 
 ---
 
-**Built with ❤️ for the AI Campaign Intelligence Engine**
+**Built with  for the AI Campaign Intelligence Engine**
